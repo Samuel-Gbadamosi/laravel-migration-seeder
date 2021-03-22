@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use  App\Student;
-use  Carbon\Carbon;
+// use  Carbon\Carbon;
+use Faker\Generator as Faker;
 
 
 class StudentSeeder extends Seeder
@@ -12,34 +13,27 @@ class StudentSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
-        $students = [
-          [
-            'name' => 'pippo',
-             'data_nascita' => '08/08/2020',
-             'citta' => 'rome'
-          ],
-          [
-            'name' => 'sara',
-             'data_nascita' => '08/04/2000',
-             'citta' => 'londra'
-          ],
-          [
-            'name' => 'josh',
-             'data_nascita' => '08/09/2001',
-             'citta' => 'dublin'
-          ]
+       for ($i=0; $i < 10; $i++) {
+             $newStudent = new Student();
+             $newStudent->name = $faker->name();
+             $newStudent->data_nascita = $faker->date();
+             $newStudent->citta = $faker->city();
 
-        ];
+                 $newStudent->save();
 
-        foreach ($students as $student ) {
-          $newStudent = new Student();
-          $newStudent->name = $student['name'];
-          $newStudent->data_nascita = Carbon::createFromFormat('d/m/Y',   $student['data_nascita']);
-          $newStudent->citta = $student['citta'];
 
-          $newStudent->save();
-        }
+       }
+      // $students = config('students');
+      //
+      //   foreach ($students as $student ) {
+      //     $newStudent = new Student();
+      //     $newStudent->name = $student['name'];
+      //     $newStudent->data_nascita = Carbon::createFromFormat('d/m/Y',   $student['data_nascita']);
+      //     $newStudent->citta = $student['citta'];
+      //
+      //     $newStudent->save();
+      //   }
     }
 }
